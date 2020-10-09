@@ -62,27 +62,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\OutlineToolkit\Script\Demonstration_MeshProcessing.cs" />
-    <Compile Include="Assets\OutlineToolkit\Script\Demonstration_NoclipController.cs" />
-    <Compile Include="Assets\OutlineToolkit\Script\EdgeDetect.cs" />
-    <Compile Include="Assets\OutlineToolkit\Script\MeshProcessor.cs" />
-    <Compile Include="Assets\SceneViewHighlighter\SceneViewOutline.cs" />
-    <Compile Include="Assets\Scripts\SimpleCameraController.cs" />
+    <Compile Include="Assets\Scripts\CarController.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
-    <None Include="Assets\OutlineToolkit\Shader\EdgeDetect.shader" />
-    <None Include="Assets\OutlineToolkit\Shader\EdgeCombine.shader" />
-    <None Include="Assets\OutlineToolkit\Shader\NamedStandard.shader" />
-    <None Include="Assets\SceneViewHighlighter\SceneViewOutline.shader" />
-    <None Include="Assets\OutlineToolkit\Shader\Normals.shader" />
-    <None Include="Assets\SceneViewHighlighter\Readme.txt" />
-    <None Include="Assets\OutlineToolkit\Shader\EncodedDepth.shader" />
-    <None Include="Assets\OutlineToolkit\Shader\StandardSurfaceOutlined.shader" />
     <None Include="Assets\SimpleSky\ReadMe.txt" />
-    <None Include="Assets\OutlineToolkit\Happy Flower\happy flower care instructions.txt" />
-    <None Include="Assets\OutlineToolkit\Shader\ProcessedEdges.shader" />
-    <None Include="Assets\OutlineToolkit\Shader\Outline.shader" />
-    <None Include="Assets\OutlineToolkit\README.txt" />
-    <None Include="Assets\OutlineToolkit\Shader\OutlineDepthDependant.shader" />
     <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
       <HintPath>D:/KRE/Documents/Unity/_Jams/LD47 - Loop Fare Remake/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
     </Reference>

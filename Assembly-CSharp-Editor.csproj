@@ -62,9 +62,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\SceneViewHighlighter\Editor\Highlighter.cs" />
-    <Compile Include="Assets\SceneViewHighlighter\Editor\Prefs.cs" />
-    <Compile Include="Assets\SceneViewHighlighter\Editor\Utils.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Editor\ReadmeEditor.cs" />
     <Reference Include="UnityEditor.TestRunner">
       <HintPath>D:/KRE/Documents/Unity/_Jams/LD47 - Loop Fare Remake/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
