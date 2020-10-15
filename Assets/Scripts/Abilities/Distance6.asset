@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7e8a1b202a72a241bdc838a19a1c469, type: 3}
+  m_Name: Distance6
+  m_EditorClassIdentifier: 
+  title: Fare number upgrade
+  description: 'Fares spawn each 6th tile. '
+  iconBW: {fileID: 21300000, guid: 78fa29e12aa530c4f80d12410eac7fb7, type: 3}
+  iconColor: {fileID: 21300000, guid: f8c37192339a6e84b9c388fb406320ae, type: 3}
+  cost: 120
+  type: 14
+  abilityValue: 6
+  parentAbility: 13

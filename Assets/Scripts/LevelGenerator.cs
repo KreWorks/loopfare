@@ -48,7 +48,7 @@ public class LevelGenerator : MonoBehaviour
 		int randomXPosition = Random.Range(-1, 2);
 		Vector3 position = new Vector3(randomXPosition * tileSize, 0, tileSize * levelPartCount);
 
-		if (randomNumber > 0.6f)
+		if (randomNumber > 0.7f)
 		{
 			position.y = obstaclePrefab.transform.position.y;
 			Instantiate(obstaclePrefab, position, Quaternion.identity, this.transform);

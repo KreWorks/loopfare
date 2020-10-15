@@ -7,13 +7,16 @@ public class DestroyerManager : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		Destroy(other.gameObject);
+		Destroy(other.gameObject);	
+	}
 
-		if(other.tag == "GroundPart")
+	private void OnCollisionEnter(Collision collision)
+	{
+		Destroy(collision.gameObject);
+		if (collision.gameObject.tag == "GroundPart")
 		{
 			OnGroundHit?.Invoke();
 		}
-		
 	}
 
 	public void AddListenerOnGroundHitEvent(Action listener)

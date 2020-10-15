@@ -1,0 +1,21 @@
+﻿using UnityEngine;
+
+public enum AbilityType 
+{
+    NULL, 
+	STASH_30, 
+	STASH_50,
+	STASH_100,
+	SPEED_125,
+	SPEED_150,
+	SPEED_175,
+	FARE_BLUE,
+	FARE_RED,
+	FARE_GREEN,
+	FARE_PRICE_3, 
+	FARE_PRICE_5,
+	FARE_PRICE_10,
+	FARE_DISTANCE_7, 
+	FARE_DISTANCE_6, 
+	FARE_DISTANCE_5
+}

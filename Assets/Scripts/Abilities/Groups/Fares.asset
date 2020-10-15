@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3964b2adbd9e194eb035457df1b31e6, type: 3}
+  m_Name: Fares
+  m_EditorClassIdentifier: 
+  groupTitle: Fares
+  level:
+  - {fileID: 11400000, guid: 5f15f8ad9c785e645913c3dd035373af, type: 2}
+  - {fileID: 11400000, guid: 537aac5edf1165348afe4d3983ae8706, type: 2}
+  - {fileID: 11400000, guid: 7ae5015df31428f419996b6a54968a1f, type: 2}

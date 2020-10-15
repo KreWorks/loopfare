@@ -9,6 +9,9 @@ TagManager:
   - Obstacle
   - Fare
   - FareTarget
+  - IconBorder
+  - IconBackground
+  - IconImage
   layers:
   - Default
   - TransparentFX
