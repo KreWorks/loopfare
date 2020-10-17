@@ -15,7 +15,7 @@ public class CarController : MonoBehaviour
 	{
 		rb = GetComponent<Rigidbody>();
 
-		rb.velocity = this.transform.forward * carSpeed;
+		rb.velocity = this.transform.forward * GetModifiedCarSpeed();
     }
 
     // Update is called once per frame
@@ -31,6 +31,26 @@ public class CarController : MonoBehaviour
 		if((this.transform.position.x + laneTolerance) < laneWitdh && (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)))
 		{
 			this.transform.position -= laneWitdh * Vector3.left;
+		}
+	}
+
+	float GetModifiedCarSpeed()
+	{
+		if (GameDatas.HasAbility(AbilityType.SPEED_175))
+		{
+			return carSpeed * 1.75f;
+		}
+		else if (GameDatas.HasAbility(AbilityType.SPEED_150))
+		{
+			return carSpeed * 1.5f;
+		}
+		else if(GameDatas.HasAbility(AbilityType.SPEED_125))
+		{
+			return carSpeed * 1.25f;
+		}
+		else
+		{
+			return carSpeed;
 		}
 	}
 }

@@ -27,8 +27,9 @@ public class AbilityController : MonoBehaviour, IPointerClickHandler
 		menuController.AddListenerOnAbilitySelectedEvent(OtherIconSelected);
 		menuController.AddListenerOnAbilityUnlockEvent(AbilityUnlocked);
 
-		locked = true;
+		locked = !GameDatas.HasAbility(ability.type);
 		selected = false;
+
 		Image[] images = GetComponentsInChildren<Image>();
 
 		foreach(Image iconPart in images)

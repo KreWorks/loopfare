@@ -19,12 +19,6 @@ public class AbilitiesRenderer : MonoBehaviour
 		}
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 	void RenderLine(AbilityGroupSO abilityLine)
 	{
 		GameObject line = Instantiate(abilityLinePrefab, this.transform);

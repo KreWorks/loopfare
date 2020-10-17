@@ -62,15 +62,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\AbilityManager.cs" />
     <Compile Include="Assets\Scripts\AbilitiesRenderer.cs" />
     <Compile Include="Assets\Scripts\AbilityController.cs" />
-    <Compile Include="Assets\Scripts\AbilityType.cs" />
     <Compile Include="Assets\Scripts\CarController.cs" />
     <Compile Include="Assets\Scripts\CoinCollector.cs" />
     <Compile Include="Assets\Scripts\DestroyerManager.cs" />
+    <Compile Include="Assets\Scripts\Enums\AbilityType.cs" />
     <Compile Include="Assets\Scripts\FollowController.cs" />
     <Compile Include="Assets\Scripts\GameDatas.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\LevelGenerator.cs" />
     <Compile Include="Assets\Scripts\MenuController.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\AbilityGroupSO.cs" />

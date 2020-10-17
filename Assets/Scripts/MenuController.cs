@@ -29,12 +29,18 @@ public class MenuController : MonoBehaviour
 
 	AbilitySO selectedAbility;
 
+	private void Awake()
+	{
+		GameDatas.LoadData();
+	}
+
 	void Start()
 	{
 		HideAllMenuAndTab();
 
 		mainMenu.SetActive(true);
 		mainTab.SetActive(true);
+
 		UpdateAccounts();
 	}
 
@@ -48,6 +54,8 @@ public class MenuController : MonoBehaviour
 
 	public void PlayGameButtonAction()
 	{
+		GameDatas.SaveData();
+
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 	}
 
@@ -69,6 +77,7 @@ public class MenuController : MonoBehaviour
 
 	public void QuitButtonAction()
 	{
+        GameDatas.SaveData();
 		Application.Quit();
 	}
 
@@ -94,9 +103,10 @@ public class MenuController : MonoBehaviour
 
 	public void OptionsResetButtonAction()
 	{
-		AbilityManager abilityManager = FindObjectOfType<AbilityManager>();
+		GameDatas.BankAccount = 0;
+		GameDatas.CollectedCoins = 0;
 
-		abilityManager.ResetAbilities();
+		GameDatas.ResetAbilities();
 	}
 
 	void HideAllMenuAndTab()
@@ -111,22 +121,23 @@ public class MenuController : MonoBehaviour
 
 	public void SetMusicVolume()
 	{
-		PlayerPrefs.SetFloat("AudioVolume", volumeSlider.value);
+		GameDatas.MusicVolume = volumeSlider.value;
 	}
 
 	public void SetBackGroundMusic()
 	{
-		int isMusic = PlayerPrefs.GetInt("IsMusic", 1);
+		int isMusic = GameDatas.MusicToggle == true ? 1 : 0;
+
 		//We want it to work as a toggle
 		if (isMusic == 1.0f && musicToggle.value < 1.0f)
 		{
 			musicToggle.value = 0.0f;
-			PlayerPrefs.SetInt("IsMusic", 0);
+			GameDatas.MusicToggle = false;
 		}
 		else if (isMusic == 0.0f && musicToggle.value > 0.0f)
 		{
 			musicToggle.value = 1.0f;
-			PlayerPrefs.SetInt("IsMusic", 1);
+			GameDatas.MusicToggle = true;
 		}
 	}
 
