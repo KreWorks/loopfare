@@ -156,6 +156,14 @@ MonoBehaviour:
   coinPrefab: {fileID: 1591165099382186, guid: 160a6121b4d25254da31bdab63ad82b7, type: 3}
   obstaclePrefab: {fileID: 1267589063166154, guid: e865a10713e46984aba70d89a679e42f,
     type: 3}
+  fares:
+  - {fileID: 2873115813707218598, guid: 7f1180714c51cfc46bb317831726dc41, type: 3}
+  - {fileID: 3102223482961225163, guid: af82957ba8886b640adb11b1235ad33e, type: 3}
+  fareTarget: {fileID: 911359684906909830, guid: dc9500d07f429d4468c9adf904ce97eb,
+    type: 3}
+  blueFareMaterial: {fileID: 0}
+  redFareMaterial: {fileID: 0}
+  greenFareMaterial: {fileID: 0}
   startPartCount: 20
   tileSize: 3
   scale: 0.16

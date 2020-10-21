@@ -153,4 +153,24 @@ public static class GameDatas
 			}
 		}
 	}
+
+	public static int GetFareDistance()
+	{
+		if (HasAbility(AbilityType.FARE_DISTANCE_5))
+		{
+			return 5; 
+		}
+		else if (HasAbility(AbilityType.FARE_DISTANCE_6))
+		{
+			return 6;
+		}
+		else if (HasAbility(AbilityType.FARE_DISTANCE_7))
+		{
+			return 7; 
+		}
+		else
+		{
+			return 8;
+		}
+	}
 }

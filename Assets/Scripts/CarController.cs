@@ -53,4 +53,13 @@ public class CarController : MonoBehaviour
 			return carSpeed;
 		}
 	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		if(other.tag == "Obstacle")
+		{
+
+			Debug.Log("You hit an obstacle");
+		}
+	}
 }
