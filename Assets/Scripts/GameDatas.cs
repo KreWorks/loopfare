@@ -14,6 +14,8 @@ public static class GameDatas
 	private static float musicVolume;
 	private static bool musicToggle;
 
+	private static string endGameMessage;
+
 	private static Dictionary<AbilityType, bool> abilities;
 
 	public static int CollectedCoins
@@ -61,6 +63,18 @@ public static class GameDatas
 		set
 		{
 			musicToggle = value;
+		}
+	}
+
+	public static string EndGameMessage
+	{
+		get
+		{
+			return endGameMessage;
+		}
+		set
+		{
+			endGameMessage = value;
 		}
 	}
 
@@ -171,6 +185,26 @@ public static class GameDatas
 		else
 		{
 			return 8;
+		}
+	}
+
+	public static int GetStash()
+	{
+		if (GameDatas.HasAbility(AbilityType.STASH_100))
+		{
+			return 100;
+		}
+		else if (GameDatas.HasAbility(AbilityType.STASH_50))
+		{
+			return 50;
+		}
+		else if (GameDatas.HasAbility(AbilityType.STASH_30))
+		{
+			return 30;
+		}
+		else
+		{
+			return 20;
 		}
 	}
 }

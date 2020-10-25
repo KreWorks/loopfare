@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\FollowController.cs" />
     <Compile Include="Assets\Scripts\GameDatas.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\GameUIController.cs" />
     <Compile Include="Assets\Scripts\LevelGenerator.cs" />
     <Compile Include="Assets\Scripts\MenuController.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\AbilityGroupSO.cs" />

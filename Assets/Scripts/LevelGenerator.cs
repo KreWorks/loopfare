@@ -59,7 +59,10 @@ public class LevelGenerator : MonoBehaviour
 		Vector3 position = new Vector3(-1.5f * tileSize, 0, levelPartCount * tileSize);
 		Instantiate(levelPartPrefab, position, Quaternion.identity, this.transform);
 
-		SpawnItemOnGround();
+		if(levelPartCount >= 8)
+		{
+			SpawnItemOnGround();
+		}
 
 		if (GameDatas.HasAbility(AbilityType.FARE_BLUE))
 		{
@@ -94,19 +97,34 @@ public class LevelGenerator : MonoBehaviour
 		}
 	}
 
-	private Vector3 SpawnFare(Vector3 position)
+	void SpawnFare(Vector3 position)
 	{
 		if (levelPartCount % fareDistance == 0 && levelPartCount != 0)
 		{
 			xPosition = ((xPosition + 2) % 3) - 1;
 			position = new Vector3(xPosition * tileSize, 0, tileSize * levelPartCount);
 
-			GameObject fare = Instantiate(fares[0], position, Quaternion.identity, this.transform);
-			fare.GetComponent<MeshRenderer>().sharedMaterial = blueFareMaterial;
+			FareColor randomColor = GetRandomColor();
+			Material fareMaterial = GetFareMaterial(randomColor);
 
+			if (HasFare(randomColor))
+			{
+				position.y = fareTarget.transform.position.y;
+				GameObject fareTargetObject = Instantiate(fareTarget, position, fareTarget.transform.rotation, this.transform);
+
+				ChangeColor(fareMaterial, fareTargetObject);
+			}
+			else
+			{
+				int gender = Random.Range(0, 2);
+
+				position.y = fares[gender].transform.position.y;
+				GameObject fareObject = Instantiate(fares[gender], position, Quaternion.identity, this.transform);
+
+				ChangeColor(fareMaterial, fareObject);
+				ChangeSpawnedFareBool(randomColor);
+			}
 		}
-
-		return position;
 	}
 
 	FareColor GetRandomColor()
@@ -124,6 +142,68 @@ public class LevelGenerator : MonoBehaviour
 				return FareColor.GREEN;
 			default:
 				return FareColor.BLUE;
+		}
+	}
+
+	Material GetFareMaterial(FareColor color)
+	{
+		switch (color)
+		{
+			case FareColor.BLUE:
+				return blueFareMaterial;
+			case FareColor.RED:
+				return redFareMaterial;
+			case FareColor.GREEN:
+				return greenFareMaterial;
+			default:
+				return blueFareMaterial;
+		}
+	}
+
+	bool HasFare(FareColor color)
+	{
+		switch (color)
+		{
+			case FareColor.BLUE:
+				return hasBlueFare;
+			case FareColor.RED:
+				return hasRedFare;
+			case FareColor.GREEN:
+				return hasGreenFare;
+			default:
+				return false;
+		}
+	}
+
+	void ChangeColor(Material newMaterial, GameObject fareObject)
+	{
+		MeshRenderer[] meshes = fareObject.GetComponentsInChildren<MeshRenderer>();
+		SkinnedMeshRenderer[] skinnedMeshes = fareObject.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+		foreach(MeshRenderer mesh in meshes)
+		{
+			mesh.sharedMaterial = newMaterial;
+		}
+
+		foreach(SkinnedMeshRenderer skinMesh in skinnedMeshes)
+		{
+			skinMesh.sharedMaterial = newMaterial;
+		}
+	}
+
+	void ChangeSpawnedFareBool(FareColor color)
+	{
+		switch (color)
+		{
+			case FareColor.BLUE:
+				hasBlueFare = !hasBlueFare;
+				break;
+			case FareColor.RED:
+				hasRedFare = !hasRedFare;
+				break;
+			case FareColor.GREEN:
+				hasGreenFare = !hasGreenFare;
+				break;
 		}
 	}
 }

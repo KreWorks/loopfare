@@ -1,24 +1,19 @@
 ﻿using UnityEngine;
-using TMPro;
+using System;
 
 public class CoinCollector : MonoBehaviour
 {
-	public TMP_Text coinText;
-
 	int coinsCollected;
 	int stash;
+
+	Action<int> OnCoinCollected;
 
 	private void Start()
 	{
 		coinsCollected = 0;
+		stash = GameDatas.GetStash();
 
-		SetStash();
-		SetCoinText();
-	}
-
-	void SetCoinText()
-	{
-		coinText.text = coinsCollected.ToString() + "/" + stash.ToString(); 
+		OnCoinCollected?.Invoke(coinsCollected);
 	}
 
 	private void OnTriggerEnter(Collider other)
@@ -26,34 +21,24 @@ public class CoinCollector : MonoBehaviour
 		if(other.tag == "Coin")
 		{
 			coinsCollected++;
-			SetCoinText();
 			Destroy(other.gameObject);
+
+			OnCoinCollected?.Invoke(coinsCollected);
 
 			if(stash <= coinsCollected)
 			{
 				GameManager gameManager = FindObjectOfType<GameManager>();
-				gameManager.EndGame(stash);
+				gameManager.EndGame(stash, "Your stash is full.");
 			}
 		}
 	}
-	
-	void SetStash()
+
+	public void AddListenerOnCoinCollectedEvent(Action<int> listener)
 	{
-		if (GameDatas.HasAbility(AbilityType.STASH_100))
-		{
-			stash = 100;
-		}
-		else if (GameDatas.HasAbility(AbilityType.STASH_50))
-		{
-			stash = 50;
-		}
-		else if (GameDatas.HasAbility(AbilityType.STASH_30))
-		{
-			stash = 30;
-		}
-		else
-		{
-			stash = 20;
-		}
+		OnCoinCollected += listener;
+	}
+	public void RemoveListenerOnCoinCollectedEvent(Action<int> listener)
+	{
+		OnCoinCollected -= listener;
 	}
 }

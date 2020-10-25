@@ -7,31 +7,56 @@ public class CarController : MonoBehaviour
 	public float carSpeed;
 	public float laneWitdh = 1.0f;
 	public float laneTolerance = 0.01f;
+	public float explosionDuration;
+	public GameObject explosionEffect;
 
-	Rigidbody rb; 
+	Rigidbody rb;
+	bool isExploded;
+	float explosionTime;
+	GameObject exposionEffectObject;
+	GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
 	{
 		rb = GetComponent<Rigidbody>();
+		isExploded = false;
+		explosionTime = 0.0f;
 
 		rb.velocity = this.transform.forward * GetModifiedCarSpeed();
+
+		gameManager = FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-		rb.velocity = this.transform.forward * carSpeed;
-		
-		if((this.transform.position.x -  laneTolerance) > -laneWitdh && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)))
+		if (!isExploded)
 		{
-			this.transform.position += laneWitdh * Vector3.left;
+			rb.velocity = this.transform.forward * carSpeed;
+
+			if ((this.transform.position.x - laneTolerance) > -laneWitdh && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)))
+			{
+				this.transform.position += laneWitdh * Vector3.left;
+			}
+
+			if ((this.transform.position.x + laneTolerance) < laneWitdh && (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)))
+			{
+				this.transform.position -= laneWitdh * Vector3.left;
+			}
+		}
+		else
+		{
+			rb.velocity = Vector3.zero;
+
+			explosionTime += Time.deltaTime;
+			if(explosionDuration <= explosionTime)
+			{
+				Destroy(this.gameObject);
+				Destroy(exposionEffectObject);
+			}
 		}
 
-		if((this.transform.position.x + laneTolerance) < laneWitdh && (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)))
-		{
-			this.transform.position -= laneWitdh * Vector3.left;
-		}
 	}
 
 	float GetModifiedCarSpeed()
@@ -56,10 +81,27 @@ public class CarController : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
+
 		if(other.tag == "Obstacle")
 		{
+			isExploded = true;
+			explosionTime = 0.0f;
 
-			Debug.Log("You hit an obstacle");
+			exposionEffectObject = Instantiate(explosionEffect, this.transform.position, explosionEffect.transform.rotation);
+			exposionEffectObject.GetComponent<ParticleSystem>().Play();
+
+			this.gameObject.SetActive(false);
+			gameManager.EndGame(10, "You hit an obstacle");
+		}
+		else if (other.tag == "Fare")
+		{
+			Destroy(other.gameObject);
+			Debug.Log("You picked up a fare");
+		}
+		else if(other.tag == "FareTarget")
+		{
+			Destroy(other.gameObject);
+			Debug.Log("You liftexd the fare");
 		}
 	}
 }

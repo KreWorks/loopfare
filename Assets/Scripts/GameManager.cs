@@ -3,14 +3,17 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+	int coins;
+
 	void Awake()
 	{
 		GameDatas.LoadData();
 	}
 
-	public void EndGame(int collectedCoins)
+	public void EndGame(int collectedCoins, string endString)
 	{
 		GameDatas.AddCollectedCoinsToBank(collectedCoins);
+		GameDatas.EndGameMessage = endString;
 		GameDatas.SaveData();
 
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
