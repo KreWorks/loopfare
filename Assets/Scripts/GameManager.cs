@@ -3,8 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-	int coins;
-
 	void Awake()
 	{
 		GameDatas.LoadData();

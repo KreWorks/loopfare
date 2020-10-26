@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\AbilityController.cs" />
     <Compile Include="Assets\Scripts\CarController.cs" />
     <Compile Include="Assets\Scripts\CoinCollector.cs" />
+    <Compile Include="Assets\Scripts\ColorController.cs" />
     <Compile Include="Assets\Scripts\DestroyerManager.cs" />
     <Compile Include="Assets\Scripts\Enums\AbilityType.cs" />
     <Compile Include="Assets\Scripts\FollowController.cs" />

@@ -111,8 +111,10 @@ public class LevelGenerator : MonoBehaviour
 			{
 				position.y = fareTarget.transform.position.y;
 				GameObject fareTargetObject = Instantiate(fareTarget, position, fareTarget.transform.rotation, this.transform);
+				fareTargetObject.GetComponent<ColorController>().SetFareColor(randomColor);
 
 				ChangeColor(fareMaterial, fareTargetObject);
+				ChangeSpawnedFareBool(randomColor);
 			}
 			else
 			{
@@ -120,6 +122,7 @@ public class LevelGenerator : MonoBehaviour
 
 				position.y = fares[gender].transform.position.y;
 				GameObject fareObject = Instantiate(fares[gender], position, Quaternion.identity, this.transform);
+				fareObject.GetComponent<ColorController>().SetFareColor(randomColor);
 
 				ChangeColor(fareMaterial, fareObject);
 				ChangeSpawnedFareBool(randomColor);

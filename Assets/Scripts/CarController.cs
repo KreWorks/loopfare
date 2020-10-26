@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System;
 
 public class CarController : MonoBehaviour
 {
@@ -9,11 +8,16 @@ public class CarController : MonoBehaviour
 	public float laneTolerance = 0.01f;
 	public float explosionDuration;
 	public GameObject explosionEffect;
+	public GameObject smokeEffect;
+
+	Action<FareColor> OnPickUpFare;
+	Action<FareColor> OnTransferFare;
 
 	Rigidbody rb;
 	bool isExploded;
 	float explosionTime;
 	GameObject exposionEffectObject;
+	GameObject smokeEffectObject;
 	GameManager gameManager;
 
     // Start is called before the first frame update
@@ -50,6 +54,7 @@ public class CarController : MonoBehaviour
 			rb.velocity = Vector3.zero;
 
 			explosionTime += Time.deltaTime;
+
 			if(explosionDuration <= explosionTime)
 			{
 				Destroy(this.gameObject);
@@ -81,7 +86,6 @@ public class CarController : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-
 		if(other.tag == "Obstacle")
 		{
 			isExploded = true;
@@ -90,18 +94,44 @@ public class CarController : MonoBehaviour
 			exposionEffectObject = Instantiate(explosionEffect, this.transform.position, explosionEffect.transform.rotation);
 			exposionEffectObject.GetComponent<ParticleSystem>().Play();
 
+			smokeEffectObject = Instantiate(smokeEffect, this.transform.position, smokeEffect.transform.rotation);
+			smokeEffectObject.GetComponent<ParticleSystem>().Play();
+
 			this.gameObject.SetActive(false);
-			gameManager.EndGame(10, "You hit an obstacle");
+			gameManager.EndGame(GameDatas.CollectedCoins, "You hit an obstacle");
 		}
 		else if (other.tag == "Fare")
 		{
+			FareColor color = other.GetComponent<ColorController>().GetFareColor();
+			OnPickUpFare?.Invoke(color);
+
 			Destroy(other.gameObject);
-			Debug.Log("You picked up a fare");
+
 		}
 		else if(other.tag == "FareTarget")
 		{
+			FareColor color = other.GetComponent<ColorController>().GetFareColor();
+			OnTransferFare?.Invoke(color);
+
 			Destroy(other.gameObject);
-			Debug.Log("You liftexd the fare");
 		}
+	}
+
+	public void AddListenerOnPickUpFareEvent(Action<FareColor> listener)
+	{
+		OnPickUpFare += listener;
+	}
+	public void RemoveListenerOnPickUpFareEvent(Action<FareColor> listener)
+	{
+		OnPickUpFare -= listener;
+	}
+
+	public void AddListenerOnTransferFareEvent(Action<FareColor> listener)
+	{
+		OnTransferFare += listener;
+	}
+	public void RemoveListenerOnTransferFareEvent(Action<FareColor> listener)
+	{
+		OnTransferFare -= listener;
 	}
 }

@@ -190,21 +190,41 @@ public static class GameDatas
 
 	public static int GetStash()
 	{
-		if (GameDatas.HasAbility(AbilityType.STASH_100))
+		if (HasAbility(AbilityType.STASH_100))
 		{
 			return 100;
 		}
-		else if (GameDatas.HasAbility(AbilityType.STASH_50))
+		else if (HasAbility(AbilityType.STASH_50))
 		{
 			return 50;
 		}
-		else if (GameDatas.HasAbility(AbilityType.STASH_30))
+		else if (HasAbility(AbilityType.STASH_30))
 		{
 			return 30;
 		}
 		else
 		{
 			return 20;
+		}
+	}
+
+	public static int GetFarePrice()
+	{
+		if (HasAbility(AbilityType.FARE_PRICE_10))
+		{
+			return 10;
+		}
+		else if (HasAbility(AbilityType.FARE_PRICE_5))
+		{
+			return 5;
+		}
+		else if (HasAbility(AbilityType.FARE_PRICE_3))
+		{
+			return 3;
+		}
+		else
+		{
+			return 2;
 		}
 	}
 }

@@ -13,17 +13,16 @@ public class CoinCollector : MonoBehaviour
 		coinsCollected = 0;
 		stash = GameDatas.GetStash();
 
-		OnCoinCollected?.Invoke(coinsCollected);
+		FindObjectOfType<CarController>().AddListenerOnTransferFareEvent(AddFarePrice);
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
 		if(other.tag == "Coin")
 		{
-			coinsCollected++;
-			Destroy(other.gameObject);
+			CollectCoin(1);
 
-			OnCoinCollected?.Invoke(coinsCollected);
+			Destroy(other.gameObject);
 
 			if(stash <= coinsCollected)
 			{
@@ -31,6 +30,18 @@ public class CoinCollector : MonoBehaviour
 				gameManager.EndGame(stash, "Your stash is full.");
 			}
 		}
+	}
+
+	void AddFarePrice(FareColor color)
+	{
+		CollectCoin(GameDatas.GetFarePrice());
+	}
+
+	void CollectCoin(int coin)
+	{
+		coinsCollected += coin;
+		GameDatas.CollectedCoins = coinsCollected;
+		OnCoinCollected?.Invoke(coinsCollected);
 	}
 
 	public void AddListenerOnCoinCollectedEvent(Action<int> listener)
