@@ -168,6 +168,26 @@ public static class GameDatas
 		}
 	}
 
+	public static float GetCarSpeedMultiplier()
+	{
+		if (GameDatas.HasAbility(AbilityType.SPEED_175))
+		{
+			return 1.75f;
+		}
+		else if (GameDatas.HasAbility(AbilityType.SPEED_150))
+		{
+			return 1.5f;
+		}
+		else if (GameDatas.HasAbility(AbilityType.SPEED_125))
+		{
+			return 1.25f;
+		}
+		else
+		{
+			return 1.0f;
+		}
+	}
+
 	public static int GetFareDistance()
 	{
 		if (HasAbility(AbilityType.FARE_DISTANCE_5))

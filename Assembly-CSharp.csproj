@@ -77,6 +77,11 @@
     <Compile Include="Assets\Scripts\MenuController.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\AbilityGroupSO.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\AbilitySO.cs" />
+    <Compile Include="Assets\Scripts\States\CarState.cs" />
+    <Compile Include="Assets\Scripts\States\ExplosionState.cs" />
+    <Compile Include="Assets\Scripts\States\StraightGoingState.cs" />
+    <Compile Include="Assets\Scripts\States\TurningLeftState.cs" />
+    <Compile Include="Assets\Scripts\States\TurningRightState.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />

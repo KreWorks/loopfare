@@ -4,6 +4,7 @@ using System;
 public class CarController : MonoBehaviour
 {
 	public float carSpeed;
+	public float laneShiftingSpeed;
 	public float laneWitdh = 1.0f;
 	public float laneTolerance = 0.01f;
 	public float explosionDuration;
@@ -14,20 +15,31 @@ public class CarController : MonoBehaviour
 	Action<FareColor> OnTransferFare;
 
 	Rigidbody rb;
-	bool isExploded;
-	float explosionTime;
+
 	GameObject exposionEffectObject;
 	GameObject smokeEffectObject;
 	GameManager gameManager;
 
+	public CarLanePosition lanePosition;
+
+	public CarState actualState;
+	public StraightGoingState straightState;
+	public TurningLeftState leftState;
+	public TurningRightState rightState;
+	public ExplosionState explosionState;
+
     // Start is called before the first frame update
     void Start()
 	{
-		rb = GetComponent<Rigidbody>();
-		isExploded = false;
-		explosionTime = 0.0f;
+		rb = GetComponentInChildren<Rigidbody>();
 
-		rb.velocity = this.transform.forward * GetModifiedCarSpeed();
+		straightState = new StraightGoingState(this, laneWitdh, laneTolerance);
+		leftState = new TurningLeftState(this, laneWitdh, laneTolerance, laneShiftingSpeed);
+		rightState = new TurningRightState(this, laneWitdh, laneTolerance, laneShiftingSpeed);
+		explosionState = new ExplosionState(this, explosionDuration);
+
+		actualState = straightState;
+		lanePosition = CarLanePosition.MIDDLE;
 
 		gameManager = FindObjectOfType<GameManager>();
     }
@@ -35,52 +47,16 @@ public class CarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (!isExploded)
+		actualState.Going(carSpeed);
+
+		if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
 		{
-			rb.velocity = this.transform.forward * carSpeed;
-
-			if ((this.transform.position.x - laneTolerance) > -laneWitdh && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)))
-			{
-				this.transform.position += laneWitdh * Vector3.left;
-			}
-
-			if ((this.transform.position.x + laneTolerance) < laneWitdh && (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)))
-			{
-				this.transform.position -= laneWitdh * Vector3.left;
-			}
-		}
-		else
-		{
-			rb.velocity = Vector3.zero;
-
-			explosionTime += Time.deltaTime;
-
-			if(explosionDuration <= explosionTime)
-			{
-				Destroy(this.gameObject);
-				Destroy(exposionEffectObject);
-			}
+			TransitionState(leftState);
 		}
 
-	}
-
-	float GetModifiedCarSpeed()
-	{
-		if (GameDatas.HasAbility(AbilityType.SPEED_175))
+		if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
 		{
-			return carSpeed * 1.75f;
-		}
-		else if (GameDatas.HasAbility(AbilityType.SPEED_150))
-		{
-			return carSpeed * 1.5f;
-		}
-		else if(GameDatas.HasAbility(AbilityType.SPEED_125))
-		{
-			return carSpeed * 1.25f;
-		}
-		else
-		{
-			return carSpeed;
+			TransitionState(rightState);
 		}
 	}
 
@@ -88,17 +64,7 @@ public class CarController : MonoBehaviour
 	{
 		if(other.tag == "Obstacle")
 		{
-			isExploded = true;
-			explosionTime = 0.0f;
-
-			exposionEffectObject = Instantiate(explosionEffect, this.transform.position, explosionEffect.transform.rotation);
-			exposionEffectObject.GetComponent<ParticleSystem>().Play();
-
-			smokeEffectObject = Instantiate(smokeEffect, this.transform.position, smokeEffect.transform.rotation);
-			smokeEffectObject.GetComponent<ParticleSystem>().Play();
-
-			this.gameObject.SetActive(false);
-			gameManager.EndGame(GameDatas.CollectedCoins, "You hit an obstacle");
+			TransitionState(explosionState);
 		}
 		else if (other.tag == "Fare")
 		{
@@ -106,7 +72,6 @@ public class CarController : MonoBehaviour
 			OnPickUpFare?.Invoke(color);
 
 			Destroy(other.gameObject);
-
 		}
 		else if(other.tag == "FareTarget")
 		{
@@ -115,6 +80,44 @@ public class CarController : MonoBehaviour
 
 			Destroy(other.gameObject);
 		}
+	}
+
+	public void SpawnExplosion()
+	{
+		DisableCar();
+
+		exposionEffectObject = Instantiate(explosionEffect, this.transform.position, explosionEffect.transform.rotation);
+		exposionEffectObject.GetComponent<ParticleSystem>().Play();
+
+		smokeEffectObject = Instantiate(smokeEffect, this.transform.position, smokeEffect.transform.rotation);
+		smokeEffectObject.GetComponent<ParticleSystem>().Play();
+	}
+
+	void DisableCar()
+	{
+		MeshRenderer[] meshes = GetComponentsInChildren<MeshRenderer>();
+
+		foreach (MeshRenderer mesh in meshes)
+		{
+			mesh.enabled = false;
+		}
+	}
+
+	public void EndCar()
+	{
+		gameManager.EndGame(GameDatas.CollectedCoins, "You hit an obstacle");
+	}
+
+	public void SetCarVelocity(Vector3 carVelocity)
+	{
+		rb.velocity = carVelocity;
+	}
+
+	public void TransitionState(CarState newState)
+	{
+		actualState.ExitState();
+		actualState = newState;
+		actualState.EnterState();
 	}
 
 	public void AddListenerOnPickUpFareEvent(Action<FareColor> listener)
